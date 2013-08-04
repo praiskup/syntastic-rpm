@@ -15,7 +15,7 @@
 
 Name:           syntastic
 Version:        2.3.0
-Release:        10.%{alphatag}%{?dist}
+Release:        11.%{alphatag}%{?dist}
 Summary:        A vim plugins to check syntax for programming languages
 Summary(fr):    Une extension de vim vérifiant la syntaxe pour les langages de programmation
 
@@ -311,6 +311,9 @@ exit 0
 
 
 %changelog
+* Sun Aug 04 2013 Fedora Release Engineering <rel-eng@lists.fedoraproject.org> - 2.3.0-11.20120917git72856e6
+- Rebuilt for https://fedoraproject.org/wiki/Fedora_20_Mass_Rebuild
+
 * Wed Jul 17 2013 Petr Pisar <ppisar@redhat.com> - 2.3.0-10.20120917git72856e6
 - Perl 5.18 rebuild
 
