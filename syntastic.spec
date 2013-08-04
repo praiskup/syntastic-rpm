@@ -1,5 +1,5 @@
-%global     revision        72856e6
-%global     snapdate        20120917
+%global     revision        e380a86
+%global     snapdate        20130731
 %global     alphatag        %{snapdate}git%{revision}
 %global     vimfiles        %{_datadir}/vim/vimfiles
 
@@ -15,7 +15,7 @@
 
 Name:           syntastic
 Version:        2.3.0
-Release:        11.%{alphatag}%{?dist}
+Release:        12.%{alphatag}%{?dist}
 Summary:        A vim plugins to check syntax for programming languages
 Summary(fr):    Une extension de vim vérifiant la syntaxe pour les langages de programmation
 
@@ -183,10 +183,10 @@ exit 0
 
 %postun
 if [ $1 -eq 0 ]; then
-   umask 022
-   cd %{vimfiles}/doc
-   >tags
-   vim -u NONE -esX -c "helptags ." -c quit
+umask 022
+cd %{vimfiles}/doc
+>tags
+vim -u NONE -esX -c "helptags ." -c quit
 fi
 exit 0
 
@@ -311,6 +311,9 @@ exit 0
 
 
 %changelog
+* Sun Aug 04 2013 "Jonathan Mercier" <"Jonathan Mercier at gmail dot org"> - 2.3.0-12.20130731gite380a86
+- Update to rev e380a86
+
 * Sun Aug 04 2013 Fedora Release Engineering <rel-eng@lists.fedoraproject.org> - 2.3.0-11.20120917git72856e6
 - Rebuilt for https://fedoraproject.org/wiki/Fedora_20_Mass_Rebuild
 
