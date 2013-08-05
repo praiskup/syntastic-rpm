@@ -1,5 +1,5 @@
-%global     revision        e380a86
-%global     snapdate        20130731
+%global     revision        a4fa323
+%global     snapdate        20130805
 %global     alphatag        %{snapdate}git%{revision}
 %global     vimfiles        %{_datadir}/vim/vimfiles
 
@@ -15,7 +15,7 @@
 
 Name:           syntastic
 Version:        2.3.0
-Release:        12.%{alphatag}%{?dist}
+Release:        13.%{alphatag}%{?dist}
 Summary:        A vim plugins to check syntax for programming languages
 Summary(fr):    Une extension de vim vérifiant la syntaxe pour les langages de programmation
 
@@ -311,6 +311,9 @@ exit 0
 
 
 %changelog
+* Mon Aug 05 2013 "Jonathan Mercier" <"Jonathan Mercier at gmail dot org"> - 2.3.0-13.20130805gita4fa323
+- Update to rev a4fa323
+
 * Sun Aug 04 2013 "Jonathan Mercier" <"Jonathan Mercier at gmail dot org"> - 2.3.0-12.20130731gite380a86
 - Update to rev e380a86
 
