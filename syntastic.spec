@@ -1,21 +1,20 @@
-%global     revision        d238665
-%global     snapdate        20131023
+%global     revision        da6520c
+%global     snapdate        20140309
 %global     alphatag        %{snapdate}git%{revision}
 %global     vimfiles        %{_datadir}/vim/vimfiles
 
 # The source for this package was pulled from upstream's git.
 # Use the following commands to generate the tarball:
-# cd syntastic;
-# git clonegit://github.com/scrooloose/syntastic.git
-# pushd syntastic
+# git clone git://github.com/scrooloose/syntastic.git
+# cd syntastic
 # git rev-parse --short HEAD # -> syntastic_rev
 # git checkout %%syntastic_rev
 # git archive --prefix=syntastic-%%{alphatag}/ HEAD --format=tar | xz > ../syntastic-%%{alphatag}.tar.xz
-# popd
+
 
 Name:           syntastic
 Version:        2.3.0
-Release:        15.%{alphatag}%{?dist}
+Release:        16.%{alphatag}%{?dist}
 Summary:        A vim plugins to check syntax for programming languages
 Summary(fr):    Une extension de vim vérifiant la syntaxe pour les langages de programmation
 
@@ -54,112 +53,110 @@ Allows checking %{-n*} sources files.                                           
 Permet de vérifier les fichiers sources écrit en %{-n*}.                            \
 %{nil}
 
+%add_subpackage -n ada gcc-gnat
+%add_subpackage -n asciidoc asciidoc
+%add_subpackage -n asm nasm
 %add_subpackage -n c gcc
+%add_subpackage -n cobol open-cobol
+%add_subpackage -n coffee coffee-script
+%add_subpackage -n coq coq
 %add_subpackage -n cpp gcc-c++
+%add_subpackage -n cs mono-core
 %add_subpackage -n css csslint
 %add_subpackage -n cucumber rubygem-cucumber
-%add_subpackage -n docbk libxml2
 %add_subpackage -n d ldc
+%add_subpackage -n docbk libxml2
 %add_subpackage -n elixir elixir
 %add_subpackage -n erlang erlang-erts
 %add_subpackage -n eruby ruby
 %add_subpackage -n fortran gcc-gfortran
-%add_subpackage -n gentoo-metadata libxml2
+%add_subpackage -n glsl mesa-libGLU
+%add_subpackage -n go gcc-go
 %add_subpackage -n haml rubygem-haml
+%add_subpackage -n haskell ghc
 %add_subpackage -n html sed curl tidy
-# javac into devel package (java-1.7.0-openjdk-devel)
 %add_subpackage -n java java-1.7.0-openjdk-devel
 %add_subpackage -n javascript jsl
 %add_subpackage -n json python-demjson
+%add_subpackage -n less nodejs
+%add_subpackage -n lex flex
+%add_subpackage -n lisp clisp
+%add_subpackage -n llvm llvm
 %add_subpackage -n lua lua
+%add_subpackage -n matlab octave
 %add_subpackage -n nasm nasm
+%add_subpackage -n objc gcc-objc
+%add_subpackage -n objcpp gcc-objc++
 %add_subpackage -n ocaml ocaml
 %add_subpackage -n perl perl
 %add_subpackage -n php php
+%add_subpackage -n po gettext
+%add_subpackage -n pod perl
 %add_subpackage -n puppet puppet
 %add_subpackage -n python pylint pyflakes
 %add_subpackage -n rst python-docutils
 %add_subpackage -n ruby ruby
 %add_subpackage -n sass rubygem-sass
 %add_subpackage -n scala scala
+%add_subpackage -n scss rubygem-scss
 %add_subpackage -n sh bash
 %add_subpackage -n tcl tcl
 %add_subpackage -n tex texlive-latex
+%add_subpackage -n texinfo texinfo
 %add_subpackage -n vala vala
+%add_subpackage -n verilog iverilog
+%add_subpackage -n vhdl freehdl
+%add_subpackage -n vim vim
 %add_subpackage -n xhtml tidy
-# xmllint into lib package (libxml2)
 %add_subpackage -n xml libxml2
 %add_subpackage -n xslt libxml2
+%add_subpackage -n yacc byacc
+%add_subpackage -n yaml libyaml
+%add_subpackage -n z80 z80asm
+%add_subpackage -n zsh zsh
 
 %prep
 %setup  -q -n %{name}-%{alphatag}
 # Use a free D compiler ldc
-sed -i "s/dmd/ldc2/g" syntax_checkers/d.vim
+sed -i "s/dmd/ldc2/g" syntax_checkers/d/dmd.vim
 # Use executable script from bindir
-sed -i "s|expand\(.*sfile.*\).*|'%{_bindir}/erlang_check_file.erl'|" syntax_checkers/erlang.vim
+sed -i "s|expand\(.*sfile.*\).*|'%{_bindir}/erlang_check_file.erl'|" syntax_checkers/erlang/escript.vim
 # Use executable script from bindir
-sed -i "s|expand\(.*sfile.*\).*|'%{_bindir}/efm_perl.pl'|" syntax_checkers/perl.vim
-# fix executable name
-sed -i "s|rst2pseudoxml.py|rst2pseudoxml|g" syntax_checkers/rst.vim
-# fix script mode
-chmod 644 syntax_checkers/efm_perl.pl
-iconv -f LATIN1 -t UTF-8 syntax_checkers/efm_perl.pl -o syntax_checkers/efm_perl.pl
+# sed -i "s|expand\(.*sfile.*\).*|'%%{_bindir}/efm_perl.pl'|" syntax_checkers/perl.vim
+rm -fr syntax_checkers/actionscript
+rm -fr syntax_checkers/applescript
+rm -fr syntax_checkers/bemhtml
+rm -fr syntax_checkers/chef
+rm -fr syntax_checkers/co
+rm -fr syntax_checkers/cuda
+rm -fr syntax_checkers/dart
+rm -fr syntax_checkers/dustjs
+rm -fr syntax_checkers/handlebars
+rm -fr syntax_checkers/haxe
+rm -fr syntax_checkers/hss
+rm -fr syntax_checkers/limbo
+rm -fr syntax_checkers/nroff
+rm -fr syntax_checkers/racket
+rm -fr syntax_checkers/rust
+rm -fr syntax_checkers/slim
+rm -fr syntax_checkers/text
+rm -fr syntax_checkers/twig
+rm -fr syntax_checkers/typescript
+rm -fr syntax_checkers/zpt
 
 %build
 
 %install
 mkdir -p %{buildroot}%{_bindir}
 mkdir -p %{buildroot}%{vimfiles}/autoload
-mkdir -p %{buildroot}%{vimfiles}/syntax_checkers
+# mkdir -p %%{buildroot}%%{vimfiles}/syntax_checkers
 mkdir -p %{buildroot}%{vimfiles}/doc/
-mkdir -p %{buildroot}%{vimfiles}/plugin
+# mkdir -p %%{buildroot}%%{vimfiles}/plugin
 
-cp      -rp       autoload/*                            %{buildroot}%{vimfiles}/autoload
+cp      -rp       autoload/*                            %{buildroot}%{vimfiles}/autoload/
 install -p -m0644 doc/syntastic.txt                     %{buildroot}%{vimfiles}/doc/syntastic.txt
-install -p -m0644 plugin/syntastic.vim                  %{buildroot}%{vimfiles}/plugin/syntastic.vim
-install -p -m0644 syntax_checkers/c.vim                 %{buildroot}%{vimfiles}/syntax_checkers
-install -p -m0644 syntax_checkers/cpp.vim               %{buildroot}%{vimfiles}/syntax_checkers
-install -p -m0644 syntax_checkers/css.vim               %{buildroot}%{vimfiles}/syntax_checkers
-install -p -m0644 syntax_checkers/cucumber.vim          %{buildroot}%{vimfiles}/syntax_checkers
-install -p -m0644 syntax_checkers/docbk.vim             %{buildroot}%{vimfiles}/syntax_checkers
-install -p -m0644 syntax_checkers/d.vim                 %{buildroot}%{vimfiles}/syntax_checkers
-install -p -m0644 syntax_checkers/elixir.vim            %{buildroot}%{vimfiles}/syntax_checkers
-install -p -m0644 syntax_checkers/erlang.vim            %{buildroot}%{vimfiles}/syntax_checkers
-install -p -m0755 syntax_checkers/erlang_check_file.erl %{buildroot}%{_bindir}/erlang_check_file.erl
-install -p -m0644 syntax_checkers/eruby.vim             %{buildroot}%{vimfiles}/syntax_checkers
-install -p -m0644 syntax_checkers/fortran.vim           %{buildroot}%{vimfiles}/syntax_checkers
-install -p -m0644 syntax_checkers/gentoo_metadata.vim   %{buildroot}%{vimfiles}/syntax_checkers
-install -p -m0644 syntax_checkers/haml.vim              %{buildroot}%{vimfiles}/syntax_checkers
-cp      -rp       syntax_checkers/html                  %{buildroot}%{vimfiles}/syntax_checkers
-install -p -m0644 syntax_checkers/html.vim              %{buildroot}%{vimfiles}/syntax_checkers
-install -p -m0644 syntax_checkers/java.vim              %{buildroot}%{vimfiles}/syntax_checkers
-cp      -rp       syntax_checkers/javascript            %{buildroot}%{vimfiles}/syntax_checkers
-install -p -m0644 syntax_checkers/javascript.vim        %{buildroot}%{vimfiles}/syntax_checkers
-cp      -rp       syntax_checkers/json                  %{buildroot}%{vimfiles}/syntax_checkers
-install -p -m0644 syntax_checkers/json.vim              %{buildroot}%{vimfiles}/syntax_checkers
-install -p -m0644 syntax_checkers/lua.vim               %{buildroot}%{vimfiles}/syntax_checkers
-install -p -m0644 syntax_checkers/nasm.vim              %{buildroot}%{vimfiles}/syntax_checkers
-install -p -m0644 syntax_checkers/ocaml.vim             %{buildroot}%{vimfiles}/syntax_checkers
-install -p -m0755 syntax_checkers/efm_perl.pl           %{buildroot}%{_bindir}/efm_perl.pl
-install -p -m0644 syntax_checkers/perl.vim              %{buildroot}%{vimfiles}/syntax_checkers
-install -p -m0644 syntax_checkers/php.vim               %{buildroot}%{vimfiles}/syntax_checkers
-install -p -m0644 syntax_checkers/puppet.vim            %{buildroot}%{vimfiles}/syntax_checkers
-cp      -rp       syntax_checkers/python                %{buildroot}%{vimfiles}/syntax_checkers
-install -p -m0644 syntax_checkers/python.vim            %{buildroot}%{vimfiles}/syntax_checkers
-install -p -m0644 syntax_checkers/rst.vim               %{buildroot}%{vimfiles}/syntax_checkers
-cp      -rp       syntax_checkers/ruby                  %{buildroot}%{vimfiles}/syntax_checkers
-install -p -m0644 syntax_checkers/ruby.vim              %{buildroot}%{vimfiles}/syntax_checkers
-install -p -m0644 syntax_checkers/sass.vim              %{buildroot}%{vimfiles}/syntax_checkers
-install -p -m0644 syntax_checkers/scss.vim              %{buildroot}%{vimfiles}/syntax_checkers
-install -p -m0644 syntax_checkers/scala.vim             %{buildroot}%{vimfiles}/syntax_checkers
-install -p -m0644 syntax_checkers/sh.vim                %{buildroot}%{vimfiles}/syntax_checkers
-install -p -m0644 syntax_checkers/tcl.vim               %{buildroot}%{vimfiles}/syntax_checkers
-install -p -m0644 syntax_checkers/tex.vim               %{buildroot}%{vimfiles}/syntax_checkers
-install -p -m0644 syntax_checkers/vala.vim              %{buildroot}%{vimfiles}/syntax_checkers
-install -p -m0644 syntax_checkers/xhtml.vim             %{buildroot}%{vimfiles}/syntax_checkers
-install -p -m0644 syntax_checkers/xml.vim               %{buildroot}%{vimfiles}/syntax_checkers
-install -p -m0644 syntax_checkers/xslt.vim              %{buildroot}%{vimfiles}/syntax_checkers
-
+cp      -rp       plugin/                               %{buildroot}%{vimfiles}/plugin
+cp      -rp       syntax_checkers/                      %{buildroot}%{vimfiles}/syntax_checkers
 # not install -ped :
 # applescript.vim    -> mac os
 # coffe.vim          -> no coffe executable in repo
@@ -193,124 +190,206 @@ exit 0
 %files
 %doc _assets/screenshot_1.png README.markdown LICENCE
 %{vimfiles}/plugin/syntastic.vim
+%{vimfiles}/plugin/syntastic
 %{vimfiles}/doc/syntastic.txt
 %dir %{vimfiles}/syntax_checkers/
 %dir %{vimfiles}/autoload/syntastic/
+%{vimfiles}/autoload/syntastic/log.vim
+%{vimfiles}/autoload/syntastic/postprocess.vim
+%{vimfiles}/autoload/syntastic/preprocess.vim
+%{vimfiles}/autoload/syntastic//util.vim
+
+%files ada
+%{vimfiles}/syntax_checkers/ada
+
+%files asciidoc
+%{vimfiles}/syntax_checkers/asciidoc
+
+%files asm
+%{vimfiles}/syntax_checkers/asm
 
 %files c
-%{vimfiles}/syntax_checkers/c.vim
+%{vimfiles}/syntax_checkers/c
 %{vimfiles}/autoload/syntastic/c.vim
 
+%files cobol
+%{vimfiles}/syntax_checkers/cobol
+
+%files coffee
+%{vimfiles}/syntax_checkers/coffee
+
+%files coq
+%{vimfiles}/syntax_checkers/coq
+
 %files cpp
-%{vimfiles}/syntax_checkers/cpp.vim
+%{vimfiles}/syntax_checkers/cpp
+
+%files cs
+%{vimfiles}/syntax_checkers/cs
 
 %files css
-%{vimfiles}/syntax_checkers/css.vim
+%{vimfiles}/syntax_checkers/css
 
 %files cucumber
-%{vimfiles}/syntax_checkers/cucumber.vim
+%{vimfiles}/syntax_checkers/cucumber
 
 %files docbk
-%{vimfiles}/syntax_checkers/docbk.vim
+%{vimfiles}/syntax_checkers/docbk
 
 %files d
-%{vimfiles}/syntax_checkers/d.vim
+%{vimfiles}/syntax_checkers/d
 
 %files elixir
-%{vimfiles}/syntax_checkers/elixir.vim
+%{vimfiles}/syntax_checkers/elixir
 
 %files erlang
-%{_bindir}/erlang_check_file.erl
-%{vimfiles}/syntax_checkers/erlang.vim
+#%%{_bindir}/erlang_check_file.erl
+%{vimfiles}/syntax_checkers/erlang
 
 %files eruby
-%{vimfiles}/syntax_checkers/eruby.vim
+%{vimfiles}/syntax_checkers/eruby
 
 %files fortran
-%{vimfiles}/syntax_checkers/fortran.vim
+%{vimfiles}/syntax_checkers/fortran
 
-%files gentoo-metadata
-%{vimfiles}/syntax_checkers/gentoo_metadata.vim
+%files go
+%{vimfiles}/syntax_checkers/go
+
+%files glsl
+%{vimfiles}/syntax_checkers/glsl
 
 %files haml
-%{vimfiles}/syntax_checkers/haml.vim
+%{vimfiles}/syntax_checkers/haml
+
+%files haskell
+%{vimfiles}/syntax_checkers/haskell
 
 %files html
-%{vimfiles}/syntax_checkers/html.vim
 %{vimfiles}/syntax_checkers/html
 
 %files java
-%{vimfiles}/syntax_checkers/java.vim
+%{vimfiles}/syntax_checkers/java
 
 %files javascript
-%{vimfiles}/syntax_checkers/javascript.vim
 %{vimfiles}/syntax_checkers/javascript
 
 %files json
-%{vimfiles}/syntax_checkers/json.vim
 %{vimfiles}/syntax_checkers/json
 
+%files less
+%{vimfiles}/syntax_checkers/less
+
+%files lex
+%{vimfiles}/syntax_checkers/lex
+
+%files lisp
+%{vimfiles}/syntax_checkers/lisp
+
+%files llvm
+%{vimfiles}/syntax_checkers/llvm
+
 %files lua
-%{vimfiles}/syntax_checkers/lua.vim
+%{vimfiles}/syntax_checkers/lua
+
+%files matlab
+%{vimfiles}/syntax_checkers/matlab
 
 %files nasm
-%{vimfiles}/syntax_checkers/nasm.vim
+%{vimfiles}/syntax_checkers/nasm
+
+%files objc
+%{vimfiles}/syntax_checkers/objc
+
+%files objcpp
+%{vimfiles}/syntax_checkers/objcpp
 
 %files ocaml
-%{vimfiles}/syntax_checkers/ocaml.vim
+%{vimfiles}/syntax_checkers/ocaml
 
 %files perl
-%{vimfiles}/syntax_checkers/perl.vim
-%{_bindir}/efm_perl.pl
+%{vimfiles}/syntax_checkers/perl
+#%%{_bindir}/efm_perl.pl
 
 %files php
-%{vimfiles}/syntax_checkers/php.vim
+%{vimfiles}/syntax_checkers/php
+
+%files po
+%{vimfiles}/syntax_checkers/po
+
+%files pod
+%{vimfiles}/syntax_checkers/pod
 
 %files puppet
-%{vimfiles}/syntax_checkers/puppet.vim
+%{vimfiles}/syntax_checkers/puppet
 
 %files python
 %{vimfiles}/syntax_checkers/python
-%{vimfiles}/syntax_checkers/python.vim
 
 %files rst
-%{vimfiles}/syntax_checkers/rst.vim
+%{vimfiles}/syntax_checkers/rst
 
 %files ruby
 %{vimfiles}/syntax_checkers/ruby
-%{vimfiles}/syntax_checkers/ruby.vim
 
 %files sass
-%{vimfiles}/syntax_checkers/sass.vim
-%{vimfiles}/syntax_checkers/scss.vim
+%{vimfiles}/syntax_checkers/sass
+
+%files scss
+%{vimfiles}/syntax_checkers/scss
 
 %files scala
-%{vimfiles}/syntax_checkers/scala.vim
+%{vimfiles}/syntax_checkers/scala
 
 %files sh
-%{vimfiles}/syntax_checkers/sh.vim
+%{vimfiles}/syntax_checkers/sh
 
 %files tcl
-%{vimfiles}/syntax_checkers/tcl.vim
+%{vimfiles}/syntax_checkers/tcl
 
 %files tex
-%{vimfiles}/syntax_checkers/tex.vim
+%{vimfiles}/syntax_checkers/tex
+
+%files texinfo
+%{vimfiles}/syntax_checkers/texinfo
 
 %files vala
-%{vimfiles}/syntax_checkers/vala.vim
+%{vimfiles}/syntax_checkers/vala
+
+%files verilog
+%{vimfiles}/syntax_checkers/verilog
+
+%files vhdl
+%{vimfiles}/syntax_checkers/vhdl
+
+%files vim
+%{vimfiles}/syntax_checkers/vim
 
 %files xhtml
-%{vimfiles}/syntax_checkers/xhtml.vim
+%{vimfiles}/syntax_checkers/xhtml
 
 %files xml
-%{vimfiles}/syntax_checkers/xml.vim
+%{vimfiles}/syntax_checkers/xml
 
 %files xslt
-%{vimfiles}/syntax_checkers/xslt.vim
+%{vimfiles}/syntax_checkers/xslt
 
+%files yacc
+%{vimfiles}/syntax_checkers/yacc
+
+%files yaml
+%{vimfiles}/syntax_checkers/yaml
+
+%files z80
+%{vimfiles}/syntax_checkers/z80
+
+%files zsh
+%{vimfiles}/syntax_checkers/zsh
 
 
 %changelog
+* Sun Mar 09 2014 jonathan MERCIER <bioinfornatics@gmail.com> - 2.3.0-16.20140309gitda6520c
+- Update to latest rev
+
 * Thu Oct 24 2013 Jonathan MERCIER <bioinfornatics@gmail.com> - 2.3.0-15.20131023gitd238665
 - Update to rev d238665
 
