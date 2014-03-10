@@ -13,7 +13,7 @@
 
 
 Name:           syntastic
-Version:        2.3.0
+Version:        3.3.0
 Release:        16.%{alphatag}%{?dist}
 Summary:        A vim plugins to check syntax for programming languages
 Summary(fr):    Une extension de vim vérifiant la syntaxe pour les langages de programmation
