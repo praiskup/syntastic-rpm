@@ -14,7 +14,7 @@
 
 Name:           syntastic
 Version:        3.3.0
-Release:        16.%{alphatag}%{?dist}
+Release:        17.%{alphatag}%{?dist}
 Summary:        A vim plugins to check syntax for programming languages
 Summary(fr):    Une extension de vim vérifiant la syntaxe pour les langages de programmation
 
@@ -387,6 +387,9 @@ exit 0
 
 
 %changelog
+* Mon Mar 10 2014 jonathan MERCIER <bioinfornatics@gmail.com> - 3.3.0-17.20140309gitda6520c
+- Version 3.3.0
+
 * Sun Mar 09 2014 jonathan MERCIER <bioinfornatics@gmail.com> - 2.3.0-16.20140309gitda6520c
 - Update to latest rev
 
