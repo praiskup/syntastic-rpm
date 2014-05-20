@@ -1,5 +1,3 @@
-%global     revision        da6520c
-%global     snapdate        20140309
 %global     alphatag        %{snapdate}git%{revision}
 %global     vimfiles        %{_datadir}/vim/vimfiles
 
@@ -13,14 +11,14 @@
 
 
 Name:           syntastic
-Version:        3.3.0
-Release:        17.%{alphatag}%{?dist}
+Version:        3.4.0
+Release:        18%{?dist}
 Summary:        A vim plugins to check syntax for programming languages
 Summary(fr):    Une extension de vim vérifiant la syntaxe pour les langages de programmation
 
 License:        WTFPL
 URL:            https://github.com/scrooloose/syntastic
-Source0:        %{name}-%{alphatag}.tar.xz
+Source0:        https://github.com/scrooloose/syntastic/archive/%{version}.tar.gz
 
 BuildArch:      noarch
 Requires:       vim
@@ -116,7 +114,7 @@ Permet de vérifier les fichiers sources écrit en %{-n*}.                      
 %add_subpackage -n zsh zsh
 
 %prep
-%setup  -q -n %{name}-%{alphatag}
+%setup  -q -n %{name}-%{version}
 # Use a free D compiler ldc
 sed -i "s/dmd/ldc2/g" syntax_checkers/d/dmd.vim
 # Use executable script from bindir
@@ -387,6 +385,9 @@ exit 0
 
 
 %changelog
+* Tue May 20 2014 jonathan MERCIER <bioinfornatics@gmail.com> - 3.4.0-18
+- Update to rev 3.4.0
+
 * Mon Mar 10 2014 jonathan MERCIER <bioinfornatics@gmail.com> - 3.3.0-17.20140309gitda6520c
 - Version 3.3.0
 
