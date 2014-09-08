@@ -11,8 +11,8 @@
 
 
 Name:           syntastic
-Version:        3.4.0
-Release:        19%{?dist}
+Version:        3.5.0
+Release:        1%{?dist}
 Summary:        A vim plugins to check syntax for programming languages
 Summary(fr):    Une extension de vim vérifiant la syntaxe pour les langages de programmation
 
@@ -73,7 +73,7 @@ Permet de vérifier les fichiers sources écrit en %{-n*}.                      
 %add_subpackage -n haml rubygem-haml
 %add_subpackage -n haskell ghc
 %add_subpackage -n html sed curl tidy
-%add_subpackage -n java java-1.7.0-openjdk-devel
+%add_subpackage -n java java-devel
 %add_subpackage -n javascript jsl
 %add_subpackage -n json python-demjson
 %add_subpackage -n less nodejs
@@ -86,7 +86,7 @@ Permet de vérifier les fichiers sources écrit en %{-n*}.                      
 %add_subpackage -n objc gcc-objc
 %add_subpackage -n objcpp gcc-objc++
 %add_subpackage -n ocaml ocaml
-%add_subpackage -n perl perl
+%add_subpackage -n perl perl syntastic-pod
 %add_subpackage -n php php
 %add_subpackage -n po gettext
 %add_subpackage -n pod perl
@@ -385,6 +385,11 @@ exit 0
 
 
 %changelog
+* Mon Sep 08 2014 Haïkel Guémar <hguemar@fedoraproject.org> - 3.5.0-1
+- Upstream 3.5.0 (RHBZ #1074998, RHBZ #1135416)
+- Fix BR to java-devel (RHBZ #1113308)
+- Add R: syntastic-pod to syntastic-perl (RHBZ #1109519)
+
 * Sun Jun 08 2014 Fedora Release Engineering <rel-eng@lists.fedoraproject.org> - 3.4.0-19
 - Rebuilt for https://fedoraproject.org/wiki/Fedora_21_Mass_Rebuild
 
