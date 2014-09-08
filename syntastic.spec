@@ -55,6 +55,7 @@ Permet de vérifier les fichiers sources écrit en %{-n*}.                      
 %add_subpackage -n asciidoc asciidoc
 %add_subpackage -n asm nasm
 %add_subpackage -n c gcc
+%add_subpackage -n cabal cabal-install
 %add_subpackage -n cobol open-cobol
 %add_subpackage -n coffee coffee-script
 %add_subpackage -n coq coq
@@ -141,6 +142,9 @@ rm -fr syntax_checkers/text
 rm -fr syntax_checkers/twig
 rm -fr syntax_checkers/typescript
 rm -fr syntax_checkers/zpt
+rm -fr syntax_checkers/arduino
+rm -fr syntax_checkers/bro
+rm -fr syntax_checkers/r
 
 %build
 
@@ -209,6 +213,9 @@ exit 0
 %files c
 %{vimfiles}/syntax_checkers/c
 %{vimfiles}/autoload/syntastic/c.vim
+
+%files cabal
+%{vimfiles}/syntax_checkers/cabal
 
 %files cobol
 %{vimfiles}/syntax_checkers/cobol
