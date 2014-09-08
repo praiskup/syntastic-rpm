@@ -96,7 +96,7 @@ Permet de vérifier les fichiers sources écrit en %{-n*}.                      
 %add_subpackage -n ruby ruby
 %add_subpackage -n sass rubygem-sass
 %add_subpackage -n scala scala
-%add_subpackage -n scss rubygem-scss
+%add_subpackage -n scss rubygem-sass
 %add_subpackage -n sh bash
 %add_subpackage -n tcl tcl
 %add_subpackage -n tex texlive-latex
@@ -389,6 +389,7 @@ exit 0
 - Upstream 3.5.0 (RHBZ #1074998, RHBZ #1135416)
 - Fix BR to java-devel (RHBZ #1113308)
 - Add R: syntastic-pod to syntastic-perl (RHBZ #1109519)
+- Fix R: rubygem-sass for scss subpackage as scss is provided by rubygem-sass
 
 * Sun Jun 08 2014 Fedora Release Engineering <rel-eng@lists.fedoraproject.org> - 3.4.0-19
 - Rebuilt for https://fedoraproject.org/wiki/Fedora_21_Mass_Rebuild
