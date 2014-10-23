@@ -1,4 +1,6 @@
-%global     alphatag        %{snapdate}git%{revision}
+# %global     revision        1327780
+# %global     snapdate        20140922
+# %global     alphatag        %{snapdate}git%{revision}
 %global     vimfiles        %{_datadir}/vim/vimfiles
 
 # The source for this package was pulled from upstream's git.
