@@ -1,19 +1,7 @@
-# %global     revision        1327780
-# %global     snapdate        20140922
-# %global     alphatag        %{snapdate}git%{revision}
 %global     vimfiles        %{_datadir}/vim/vimfiles
 
-# The source for this package was pulled from upstream's git.
-# Use the following commands to generate the tarball:
-# git clone git://github.com/scrooloose/syntastic.git
-# cd syntastic
-# git rev-parse --short HEAD # -> syntastic_rev
-# git checkout %%syntastic_rev
-# git archive --prefix=syntastic-%%{alphatag}/ HEAD --format=tar | xz > ../syntastic-%%{alphatag}.tar.xz
-
-
 Name:           syntastic
-Version:        3.5.0
+Version:        3.7.0
 Release:        1%{?dist}
 Summary:        A vim plugins to check syntax for programming languages
 Summary(fr):    Une extension de vim vérifiant la syntaxe pour les langages de programmation
@@ -95,12 +83,15 @@ Permet de vérifier les fichiers sources écrit en %{-n*}.                      
 %add_subpackage -n pod perl
 %add_subpackage -n puppet puppet
 %add_subpackage -n python pylint pyflakes
+%add_subpackage -n qml qt5-qtdeclarative-devel
+%add_subpackage -n rnc rnv
 %add_subpackage -n rst python-docutils
 %add_subpackage -n ruby ruby
 %add_subpackage -n sass rubygem-sass
 %add_subpackage -n scala scala
 %add_subpackage -n scss rubygem-sass
 %add_subpackage -n sh bash
+%add_subpackage -n spec rpmlint
 %add_subpackage -n tcl tcl
 %add_subpackage -n tex texlive-latex
 %add_subpackage -n texinfo texinfo
@@ -124,29 +115,35 @@ sed -i "s/dmd/ldc2/g" syntax_checkers/d/dmd.vim
 sed -i "s|expand\(.*sfile.*\).*|'%{_bindir}/erlang_check_file.erl'|" syntax_checkers/erlang/escript.vim
 # Use executable script from bindir
 # sed -i "s|expand\(.*sfile.*\).*|'%%{_bindir}/efm_perl.pl'|" syntax_checkers/perl.vim
-rm -fr syntax_checkers/actionscript
-rm -fr syntax_checkers/applescript
-rm -fr syntax_checkers/bemhtml
-rm -fr syntax_checkers/chef
-rm -fr syntax_checkers/co
-rm -fr syntax_checkers/cuda
-rm -fr syntax_checkers/dart
-rm -fr syntax_checkers/dustjs
-rm -fr syntax_checkers/handlebars
-rm -fr syntax_checkers/haxe
-rm -fr syntax_checkers/hss
-rm -fr syntax_checkers/limbo
-rm -fr syntax_checkers/nroff
-rm -fr syntax_checkers/racket
-rm -fr syntax_checkers/rust
-rm -fr syntax_checkers/slim
-rm -fr syntax_checkers/text
-rm -fr syntax_checkers/twig
-rm -fr syntax_checkers/typescript
-rm -fr syntax_checkers/zpt
-rm -fr syntax_checkers/arduino
-rm -fr syntax_checkers/bro
-rm -fr syntax_checkers/r
+rm -r syntax_checkers/actionscript
+rm -r syntax_checkers/applescript
+rm -r syntax_checkers/apiblueprint
+rm -r syntax_checkers/bemhtml
+rm -r syntax_checkers/bro
+rm -r syntax_checkers/chef
+rm -r syntax_checkers/co
+rm -r syntax_checkers/cuda
+rm -r syntax_checkers/dart
+rm -r syntax_checkers/dustjs
+rm -r syntax_checkers/handlebars
+rm -r syntax_checkers/haxe
+rm -r syntax_checkers/hss
+rm -r syntax_checkers/jade
+rm -r syntax_checkers/limbo
+rm -r syntax_checkers/markdown
+rm -r syntax_checkers/mercury
+rm -r syntax_checkers/nix
+rm -r syntax_checkers/nroff
+rm -r syntax_checkers/r
+rm -r syntax_checkers/racket
+rm -r syntax_checkers/slim
+rm -r syntax_checkers/sml
+rm -r syntax_checkers/sql
+rm -r syntax_checkers/stylus
+rm -r syntax_checkers/text
+rm -r syntax_checkers/twig
+rm -r syntax_checkers/typescript
+rm -r syntax_checkers/zpt
 
 %build
 
@@ -250,7 +247,6 @@ exit 0
 %{vimfiles}/syntax_checkers/elixir
 
 %files erlang
-#%%{_bindir}/erlang_check_file.erl
 %{vimfiles}/syntax_checkers/erlang
 
 %files eruby
@@ -315,7 +311,6 @@ exit 0
 
 %files perl
 %{vimfiles}/syntax_checkers/perl
-#%%{_bindir}/efm_perl.pl
 
 %files php
 %{vimfiles}/syntax_checkers/php
@@ -331,6 +326,12 @@ exit 0
 
 %files python
 %{vimfiles}/syntax_checkers/python
+
+%files qml
+%{vimfiles}/syntax_checkers/qml
+
+%files rnc
+%{vimfiles}/syntax_checkers/rnc
 
 %files rst
 %{vimfiles}/syntax_checkers/rst
@@ -349,6 +350,9 @@ exit 0
 
 %files sh
 %{vimfiles}/syntax_checkers/sh
+
+%files spec
+%{vimfiles}/syntax_checkers/spec
 
 %files tcl
 %{vimfiles}/syntax_checkers/tcl
@@ -394,6 +398,9 @@ exit 0
 
 
 %changelog
+* Thu Sep 08 2016 Pavel Raiskup <praiskup@redhat.com> - 3.7.0-1
+- unretirement, rebase to 3.7.0 (rhbz#1374138)
+
 * Mon Sep 08 2014 Haïkel Guémar <hguemar@fedoraproject.org> - 3.5.0-1
 - Upstream 3.5.0 (RHBZ #1074998, RHBZ #1135416)
 - Fix BR to java-devel (RHBZ #1113308)
