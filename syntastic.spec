@@ -29,6 +29,7 @@ du fichier. Si une erreur de syntaxe est détecté, les utilisateurs sont
 informés et sont heureux de ne pas avoir compiler leur code ou d'avoir
 exécuter leur script afin de les trouver.
 
+
 %define add_subpackage(n:)                                                          \
 %package %{-n*}                                                                     \
 Summary:        A syntax checker for %{-n*} programming language                    \
@@ -39,11 +40,15 @@ Requires:       %*                                                              
 Allows checking %{-n*} sources files.                                               \
 %description -l fr %{-n*}                                                           \
 Permet de vérifier les fichiers sources écrit en %{-n*}.                            \
-%{nil}
+%global files_to_do %{?files_to_do}                                               \\\
+%files_for_lang %{-n*}                                                            \\\
+%{expand:%%{?additional_files_for_lang_%{-n*}}}
 
 %add_subpackage -n ada gcc-gnat
 %add_subpackage -n asciidoc asciidoc
 %add_subpackage -n asm nasm
+%global additional_files_for_lang_c \
+%{vimfiles}/autoload/syntastic/c.vim
 %add_subpackage -n c gcc
 %add_subpackage -n cabal cabal-install
 %add_subpackage -n cobol open-cobol
@@ -106,6 +111,14 @@ Permet de vérifier les fichiers sources écrit en %{-n*}.                      
 %add_subpackage -n yaml libyaml
 %add_subpackage -n z80 z80asm
 %add_subpackage -n zsh zsh
+
+
+# Intentional %%define here, intentionally after %%add_subpackage usage.
+%define files_for_lang() \
+%%files %1 \
+%%license LICENCE \
+%%{vimfiles}/syntax_checkers/%1
+
 
 %prep
 %setup  -q -n %{name}-%{version}
@@ -201,82 +214,14 @@ exit 0
 %{vimfiles}/autoload/syntastic/preprocess.vim
 %{vimfiles}/autoload/syntastic//util.vim
 
-%global files_for_lang() %files %1\
-%license LICENCE\
-%{vimfiles}/syntax_checkers/%1
 
-%files_for_lang ada
-%files_for_lang asciidoc
-%files_for_lang asm
-%files_for_lang c
-%{vimfiles}/autoload/syntastic/c.vim
-%files_for_lang cabal
-%files_for_lang cobol
-%files_for_lang coffee
-%files_for_lang coq
-%files_for_lang cpp
-%files_for_lang cs
-%files_for_lang css
-%files_for_lang cucumber
-%files_for_lang docbk
-%files_for_lang d
-%files_for_lang elixir
-%files_for_lang erlang
-%files_for_lang eruby
-%files_for_lang fortran
-%files_for_lang go
-%files_for_lang glsl
-%files_for_lang glsl
-%files_for_lang haml
-%files_for_lang haskell
-%files_for_lang html
-%files_for_lang java
-%files_for_lang javascript
-%files_for_lang json
-%files_for_lang less
-%files_for_lang lex
-%files_for_lang lisp
-%files_for_lang llvm
-%files_for_lang lua
-%files_for_lang matlab
-%files_for_lang nasm
-%files_for_lang objc
-%files_for_lang objcpp
-%files_for_lang ocaml
-%files_for_lang perl
-%files_for_lang php
-%files_for_lang po
-%files_for_lang pod
-%files_for_lang puppet
-%files_for_lang python
-%files_for_lang qml
-%files_for_lang rnc
-%files_for_lang rst
-%files_for_lang ruby
-%files_for_lang sass
-%files_for_lang scss
-%files_for_lang scala
-%files_for_lang sh
-%files_for_lang spec
-%files_for_lang tcl
-%files_for_lang tex
-%files_for_lang texinfo
-%files_for_lang vala
-%files_for_lang verilog
-%files_for_lang vhdl
-%files_for_lang vim
-%files_for_lang xhtml
-%files_for_lang xml
-%files_for_lang xslt
-%files_for_lang yacc
-%files_for_lang yaml
-%files_for_lang z80
-%files_for_lang zsh
+%{expand:%files_to_do}
 
 
 %changelog
 * Wed Sep 14 2016 Pavel Raiskup <praiskup@redhat.com> - 3.7.0-2
 - add license to all subpackages
+- condense the spec file a bit more
 
 * Thu Sep 08 2016 Pavel Raiskup <praiskup@redhat.com> - 3.7.0-1
 - unretirement, rebase to 3.7.0 (rhbz#1374138)
