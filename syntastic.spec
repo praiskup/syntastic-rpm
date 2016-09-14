@@ -29,6 +29,16 @@ du fichier. Si une erreur de syntaxe est détecté, les utilisateurs sont
 informés et sont heureux de ne pas avoir compiler leur code ou d'avoir
 exécuter leur script afin de les trouver.
 
+%define add_pkg_files() \
+%global pkg %1 \
+%{lua:
+pkg = rpm.expand('%pkg')
+spec = "%files " .. pkg .. '\\n'
+af = (af == nil and spec or af .. spec)
+af = af .. "%license LICENCE\\n"
+af = af .. rpm.expand("%{?additional_files_for_lang_" .. pkg .. "}") .. "\\n"
+af = af .. rpm.expand("%{vimfiles}/syntax_checkers/" .. pkg) .. "\\n\\n"
+}
 
 %define add_subpackage(n:)                                                          \
 %package %{-n*}                                                                     \
@@ -40,9 +50,7 @@ Requires:       %*                                                              
 Allows checking %{-n*} sources files.                                               \
 %description -l fr %{-n*}                                                           \
 Permet de vérifier les fichiers sources écrit en %{-n*}.                            \
-%global files_to_do %{?files_to_do}                                               \\\
-%files_for_lang %{-n*}                                                            \\\
-%{expand:%%{?additional_files_for_lang_%{-n*}}}
+%add_pkg_files %{-n*}
 
 %add_subpackage -n ada gcc-gnat
 %add_subpackage -n asciidoc asciidoc
@@ -110,13 +118,6 @@ Permet de vérifier les fichiers sources écrit en %{-n*}.                      
 %add_subpackage -n yaml nodejs-js-yaml perl-YAML-LibYAML
 %add_subpackage -n z80 z80asm
 %add_subpackage -n zsh zsh
-
-
-# Intentional %%define here, intentionally after %%add_subpackage usage.
-%define files_for_lang() \
-%files %1 \
-%license LICENCE \
-%{vimfiles}/syntax_checkers/%1
 
 
 %prep
@@ -214,10 +215,13 @@ exit 0
 %{vimfiles}/autoload/syntastic/log.vim
 %{vimfiles}/autoload/syntastic/postprocess.vim
 %{vimfiles}/autoload/syntastic/preprocess.vim
-%{vimfiles}/autoload/syntastic//util.vim
+%{vimfiles}/autoload/syntastic/util.vim
 
 
-%files_to_do
+
+
+%{lua: print(af) }
+
 
 
 %changelog
