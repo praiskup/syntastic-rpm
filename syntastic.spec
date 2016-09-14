@@ -2,7 +2,7 @@
 
 Name:           syntastic
 Version:        3.7.0
-Release:        1%{?dist}
+Release:        2%{?dist}
 Summary:        A vim plugins to check syntax for programming languages
 Summary(fr):    Une extension de vim vérifiant la syntaxe pour les langages de programmation
 
@@ -189,7 +189,8 @@ fi
 exit 0
 
 %files
-%doc _assets/screenshot_1.png README.markdown LICENCE
+%license LICENCE
+%doc _assets/screenshot_1.png README.markdown
 %{vimfiles}/plugin/syntastic.vim
 %{vimfiles}/plugin/syntastic
 %{vimfiles}/doc/syntastic.txt
@@ -200,204 +201,83 @@ exit 0
 %{vimfiles}/autoload/syntastic/preprocess.vim
 %{vimfiles}/autoload/syntastic//util.vim
 
-%files ada
-%{vimfiles}/syntax_checkers/ada
+%global files_for_lang() %files %1\
+%license LICENCE\
+%{vimfiles}/syntax_checkers/%1
 
-%files asciidoc
-%{vimfiles}/syntax_checkers/asciidoc
-
-%files asm
-%{vimfiles}/syntax_checkers/asm
-
-%files c
-%{vimfiles}/syntax_checkers/c
+%files_for_lang ada
+%files_for_lang asciidoc
+%files_for_lang asm
+%files_for_lang c
 %{vimfiles}/autoload/syntastic/c.vim
-
-%files cabal
-%{vimfiles}/syntax_checkers/cabal
-
-%files cobol
-%{vimfiles}/syntax_checkers/cobol
-
-%files coffee
-%{vimfiles}/syntax_checkers/coffee
-
-%files coq
-%{vimfiles}/syntax_checkers/coq
-
-%files cpp
-%{vimfiles}/syntax_checkers/cpp
-
-%files cs
-%{vimfiles}/syntax_checkers/cs
-
-%files css
-%{vimfiles}/syntax_checkers/css
-
-%files cucumber
-%{vimfiles}/syntax_checkers/cucumber
-
-%files docbk
-%{vimfiles}/syntax_checkers/docbk
-
-%files d
-%{vimfiles}/syntax_checkers/d
-
-%files elixir
-%{vimfiles}/syntax_checkers/elixir
-
-%files erlang
-%{vimfiles}/syntax_checkers/erlang
-
-%files eruby
-%{vimfiles}/syntax_checkers/eruby
-
-%files fortran
-%{vimfiles}/syntax_checkers/fortran
-
-%files go
-%{vimfiles}/syntax_checkers/go
-
-%files glsl
-%{vimfiles}/syntax_checkers/glsl
-
-%files haml
-%{vimfiles}/syntax_checkers/haml
-
-%files haskell
-%{vimfiles}/syntax_checkers/haskell
-
-%files html
-%{vimfiles}/syntax_checkers/html
-
-%files java
-%{vimfiles}/syntax_checkers/java
-
-%files javascript
-%{vimfiles}/syntax_checkers/javascript
-
-%files json
-%{vimfiles}/syntax_checkers/json
-
-%files less
-%{vimfiles}/syntax_checkers/less
-
-%files lex
-%{vimfiles}/syntax_checkers/lex
-
-%files lisp
-%{vimfiles}/syntax_checkers/lisp
-
-%files llvm
-%{vimfiles}/syntax_checkers/llvm
-
-%files lua
-%{vimfiles}/syntax_checkers/lua
-
-%files matlab
-%{vimfiles}/syntax_checkers/matlab
-
-%files nasm
-%{vimfiles}/syntax_checkers/nasm
-
-%files objc
-%{vimfiles}/syntax_checkers/objc
-
-%files objcpp
-%{vimfiles}/syntax_checkers/objcpp
-
-%files ocaml
-%{vimfiles}/syntax_checkers/ocaml
-
-%files perl
-%{vimfiles}/syntax_checkers/perl
-
-%files php
-%{vimfiles}/syntax_checkers/php
-
-%files po
-%{vimfiles}/syntax_checkers/po
-
-%files pod
-%{vimfiles}/syntax_checkers/pod
-
-%files puppet
-%{vimfiles}/syntax_checkers/puppet
-
-%files python
-%{vimfiles}/syntax_checkers/python
-
-%files qml
-%{vimfiles}/syntax_checkers/qml
-
-%files rnc
-%{vimfiles}/syntax_checkers/rnc
-
-%files rst
-%{vimfiles}/syntax_checkers/rst
-
-%files ruby
-%{vimfiles}/syntax_checkers/ruby
-
-%files sass
-%{vimfiles}/syntax_checkers/sass
-
-%files scss
-%{vimfiles}/syntax_checkers/scss
-
-%files scala
-%{vimfiles}/syntax_checkers/scala
-
-%files sh
-%{vimfiles}/syntax_checkers/sh
-
-%files spec
-%{vimfiles}/syntax_checkers/spec
-
-%files tcl
-%{vimfiles}/syntax_checkers/tcl
-
-%files tex
-%{vimfiles}/syntax_checkers/tex
-
-%files texinfo
-%{vimfiles}/syntax_checkers/texinfo
-
-%files vala
-%{vimfiles}/syntax_checkers/vala
-
-%files verilog
-%{vimfiles}/syntax_checkers/verilog
-
-%files vhdl
-%{vimfiles}/syntax_checkers/vhdl
-
-%files vim
-%{vimfiles}/syntax_checkers/vim
-
-%files xhtml
-%{vimfiles}/syntax_checkers/xhtml
-
-%files xml
-%{vimfiles}/syntax_checkers/xml
-
-%files xslt
-%{vimfiles}/syntax_checkers/xslt
-
-%files yacc
-%{vimfiles}/syntax_checkers/yacc
-
-%files yaml
-%{vimfiles}/syntax_checkers/yaml
-
-%files z80
-%{vimfiles}/syntax_checkers/z80
-
-%files zsh
-%{vimfiles}/syntax_checkers/zsh
+%files_for_lang cabal
+%files_for_lang cobol
+%files_for_lang coffee
+%files_for_lang coq
+%files_for_lang cpp
+%files_for_lang cs
+%files_for_lang css
+%files_for_lang cucumber
+%files_for_lang docbk
+%files_for_lang d
+%files_for_lang elixir
+%files_for_lang erlang
+%files_for_lang eruby
+%files_for_lang fortran
+%files_for_lang go
+%files_for_lang glsl
+%files_for_lang glsl
+%files_for_lang haml
+%files_for_lang haskell
+%files_for_lang html
+%files_for_lang java
+%files_for_lang javascript
+%files_for_lang json
+%files_for_lang less
+%files_for_lang lex
+%files_for_lang lisp
+%files_for_lang llvm
+%files_for_lang lua
+%files_for_lang matlab
+%files_for_lang nasm
+%files_for_lang objc
+%files_for_lang objcpp
+%files_for_lang ocaml
+%files_for_lang perl
+%files_for_lang php
+%files_for_lang po
+%files_for_lang pod
+%files_for_lang puppet
+%files_for_lang python
+%files_for_lang qml
+%files_for_lang rnc
+%files_for_lang rst
+%files_for_lang ruby
+%files_for_lang sass
+%files_for_lang scss
+%files_for_lang scala
+%files_for_lang sh
+%files_for_lang spec
+%files_for_lang tcl
+%files_for_lang tex
+%files_for_lang texinfo
+%files_for_lang vala
+%files_for_lang verilog
+%files_for_lang vhdl
+%files_for_lang vim
+%files_for_lang xhtml
+%files_for_lang xml
+%files_for_lang xslt
+%files_for_lang yacc
+%files_for_lang yaml
+%files_for_lang z80
+%files_for_lang zsh
 
 
 %changelog
+* Wed Sep 14 2016 Pavel Raiskup <praiskup@redhat.com> - 3.7.0-2
+- add license to all subpackages
+
 * Thu Sep 08 2016 Pavel Raiskup <praiskup@redhat.com> - 3.7.0-1
 - unretirement, rebase to 3.7.0 (rhbz#1374138)
 
