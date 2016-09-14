@@ -126,8 +126,6 @@ Permet de vérifier les fichiers sources écrit en %{-n*}.                      
 sed -i "s/dmd/ldc2/g" syntax_checkers/d/dmd.vim
 # Use executable script from bindir
 sed -i "s|expand\(.*sfile.*\).*|'%{_bindir}/erlang_check_file.erl'|" syntax_checkers/erlang/escript.vim
-# Use executable script from bindir
-# sed -i "s|expand\(.*sfile.*\).*|'%%{_bindir}/efm_perl.pl'|" syntax_checkers/perl.vim
 rm -r syntax_checkers/actionscript
 rm -r syntax_checkers/applescript
 rm -r syntax_checkers/apiblueprint
@@ -163,14 +161,13 @@ rm -r syntax_checkers/zpt
 %install
 mkdir -p %{buildroot}%{_bindir}
 mkdir -p %{buildroot}%{vimfiles}/autoload
-# mkdir -p %%{buildroot}%%{vimfiles}/syntax_checkers
-mkdir -p %{buildroot}%{vimfiles}/doc/
-# mkdir -p %%{buildroot}%%{vimfiles}/plugin
+mkdir -p %{buildroot}%{vimfiles}/doc
 
 cp      -rp       autoload/*                            %{buildroot}%{vimfiles}/autoload/
 install -p -m0644 doc/syntastic.txt                     %{buildroot}%{vimfiles}/doc/syntastic.txt
 cp      -rp       plugin/                               %{buildroot}%{vimfiles}/plugin
 cp      -rp       syntax_checkers/                      %{buildroot}%{vimfiles}/syntax_checkers
+
 # not install -ped :
 # applescript.vim    -> mac os
 # coffe.vim          -> no coffe executable in repo
@@ -183,7 +180,7 @@ cp      -rp       syntax_checkers/                      %{buildroot}%{vimfiles}/
 # yaml.vim           -> no js-yaml executable in repo
 # z80.vim            -> no 80_syntax_checker.pyt executable in repo
 # zpt.vim            -> no zptlint executable in repo
-# elixir             -> no elixir executable in repo
+
 
 %post
 umask 022
