@@ -88,7 +88,7 @@ Permet de vérifier les fichiers sources écrit en %{-n*}.                      
 %add_subpackage -n pod perl
 %add_subpackage -n puppet puppet
 %add_subpackage -n python pylint pyflakes
-%add_subpackage -n qml qt5-qtdeclarative-devel
+%add_subpackage -n qml /usr/bin/qmllint
 %add_subpackage -n rnc rnv
 %add_subpackage -n rst python-docutils
 %add_subpackage -n ruby ruby
