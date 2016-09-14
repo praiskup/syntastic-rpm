@@ -2,7 +2,7 @@
 
 Name:           syntastic
 Version:        3.7.0
-Release:        2%{?dist}
+Release:        3%{?dist}
 Summary:        A vim plugins to check syntax for programming languages
 Summary(fr):    Une extension de vim vérifiant la syntaxe pour les langages de programmation
 
@@ -51,7 +51,6 @@ Permet de vérifier les fichiers sources écrit en %{-n*}.                      
 %{vimfiles}/autoload/syntastic/c.vim
 %add_subpackage -n c gcc
 %add_subpackage -n cabal cabal-install
-%add_subpackage -n cobol open-cobol
 %add_subpackage -n coffee coffee-script
 %add_subpackage -n coq coq
 %add_subpackage -n cpp gcc-c++
@@ -115,9 +114,9 @@ Permet de vérifier les fichiers sources écrit en %{-n*}.                      
 
 # Intentional %%define here, intentionally after %%add_subpackage usage.
 %define files_for_lang() \
-%%files %1 \
-%%license LICENCE \
-%%{vimfiles}/syntax_checkers/%1
+%files %1 \
+%license LICENCE \
+%{vimfiles}/syntax_checkers/%1
 
 
 %prep
@@ -139,6 +138,7 @@ rm -r syntax_checkers/bemhtml
 rm -r syntax_checkers/bro
 rm -r syntax_checkers/chef
 rm -r syntax_checkers/co
+rm -r syntax_checkers/cobol
 rm -r syntax_checkers/cuda
 rm -r syntax_checkers/dart
 rm -r syntax_checkers/dustjs
@@ -217,13 +217,14 @@ exit 0
 %{vimfiles}/autoload/syntastic//util.vim
 
 
-%{expand:%files_to_do}
+%files_to_do
 
 
 %changelog
-* Wed Sep 14 2016 Pavel Raiskup <praiskup@redhat.com> - 3.7.0-2
+* Wed Sep 14 2016 Pavel Raiskup <praiskup@redhat.com> - 3.7.0-3
 - add license to all subpackages
 - condense the spec file a bit more
+- remove cobol subpackage (open-cobol orphaned in F25+)
 
 * Thu Sep 08 2016 Pavel Raiskup <praiskup@redhat.com> - 3.7.0-1
 - unretirement, rebase to 3.7.0 (rhbz#1374138)
