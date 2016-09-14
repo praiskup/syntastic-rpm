@@ -126,6 +126,12 @@ Permet de vérifier les fichiers sources écrit en %{-n*}.                      
 sed -i "s/dmd/ldc2/g" syntax_checkers/d/dmd.vim
 # Use executable script from bindir
 sed -i "s|expand\(.*sfile.*\).*|'%{_bindir}/erlang_check_file.erl'|" syntax_checkers/erlang/escript.vim
+
+# Don't use /bin/env like shebangs.
+grep -lr '#!.*/bin/env'  | while read file; do
+    sed -i '1 s|#!.*/bin/env \(.*\)|#!/usr/bin/\1|' "$file"
+done
+
 rm -r syntax_checkers/actionscript
 rm -r syntax_checkers/applescript
 rm -r syntax_checkers/apiblueprint
