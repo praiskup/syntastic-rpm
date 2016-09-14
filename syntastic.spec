@@ -59,7 +59,7 @@ Permet de vérifier les fichiers sources écrit en %{-n*}.                      
 %add_subpackage -n css csslint
 %add_subpackage -n cucumber rubygem-cucumber
 %add_subpackage -n d ldc
-%add_subpackage -n docbk libxml2
+%add_subpackage -n docbk /usr/bin/xmllint
 %add_subpackage -n elixir elixir
 %add_subpackage -n erlang erlang-erts
 %add_subpackage -n eruby ruby
@@ -105,10 +105,10 @@ Permet de vérifier les fichiers sources écrit en %{-n*}.                      
 %add_subpackage -n vhdl freehdl
 %add_subpackage -n vim vim
 %add_subpackage -n xhtml tidy
-%add_subpackage -n xml libxml2
-%add_subpackage -n xslt libxml2
+%add_subpackage -n xml /usr/bin/xmllint
+%add_subpackage -n xslt /usr/bin/xmllint
 %add_subpackage -n yacc byacc
-%add_subpackage -n yaml libyaml
+%add_subpackage -n yaml nodejs-js-yaml perl-YAML-LibYAML
 %add_subpackage -n z80 z80asm
 %add_subpackage -n zsh zsh
 
@@ -177,7 +177,6 @@ cp      -rp       syntax_checkers/                      %{buildroot}%{vimfiles}/
 # haxe.vim           -> no haxe executable in repo
 # less.vim           -> no lessc executable in repo
 # matlab.vim         -> no mlint executable in repo
-# yaml.vim           -> no js-yaml executable in repo
 # z80.vim            -> no 80_syntax_checker.pyt executable in repo
 # zpt.vim            -> no zptlint executable in repo
 
