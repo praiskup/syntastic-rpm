@@ -1,8 +1,9 @@
-%global     vimfiles        %{_datadir}/vim/vimfiles
+%global         vimfiles        %{_datadir}/vim/vimfiles
+%global         upstream_name   syntastic
 
-Name:           syntastic
+Name:           vim-%{upstream_name}
 Version:        3.7.0
-Release:        3%{?dist}
+Release:        4%{?dist}
 Summary:        A vim plugins to check syntax for programming languages
 Summary(fr):    Une extension de vim vérifiant la syntaxe pour les langages de programmation
 
@@ -13,6 +14,7 @@ Source0:        https://github.com/scrooloose/syntastic/archive/%{version}.tar.g
 BuildArch:      noarch
 Requires:       vim
 BuildRequires:  glibc-common
+
 
 %description
 Syntastic is a syntax checking plugin that runs files through external syntax
@@ -43,6 +45,7 @@ Permet de vérifier les fichiers sources écrit en %{-n*}.                      
 %global files_to_do %{?files_to_do}                                               \\\
 %files_for_lang %{-n*}                                                            \\\
 %{expand:%%{?additional_files_for_lang_%{-n*}}}
+
 
 # Initialize files_to_do macro here to empty string.  FedoraReview tool, for
 # example, runs 'rpm.TransactionSet().parseSpec("syntastic.spec")' _twice_,
@@ -125,7 +128,7 @@ Permet de vérifier les fichiers sources écrit en %{-n*}.                      
 
 
 %prep
-%setup  -q -n %{name}-%{version}
+%setup -q -n %upstream_name-%version
 # Use a free D compiler ldc
 sed -i "s/dmd/ldc2/g" syntax_checkers/d/dmd.vim
 # Use executable script from bindir
@@ -226,6 +229,9 @@ exit 0
 
 
 %changelog
+* Thu Sep 15 2016 Pavel Raiskup <praiskup@redhat.com> - 3.7.0-4
+- rename to vim-syntastic
+
 * Wed Sep 14 2016 Pavel Raiskup <praiskup@redhat.com> - 3.7.0-3
 - add license to all subpackages
 - condense the spec file a bit more
