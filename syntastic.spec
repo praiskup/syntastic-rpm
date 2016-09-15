@@ -44,6 +44,11 @@ Permet de vérifier les fichiers sources écrit en %{-n*}.                      
 %files_for_lang %{-n*}                                                            \\\
 %{expand:%%{?additional_files_for_lang_%{-n*}}}
 
+# Initialize files_to_do macro here to empty string.  FedoraReview tool, for
+# example, runs 'rpm.TransactionSet().parseSpec("syntastic.spec")' _twice_,
+# while global macros survive from the first call (we don't want to have all
+# %%files sections generated twice).
+%global files_to_do %nil
 %add_subpackage -n ada gcc-gnat
 %add_subpackage -n asciidoc asciidoc
 %add_subpackage -n asm nasm
