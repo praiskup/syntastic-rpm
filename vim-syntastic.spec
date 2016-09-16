@@ -1,6 +1,8 @@
 %global         vimfiles        %{_datadir}/vim/vimfiles
 %global         upstream_name   syntastic
 
+%global         appdata_dir %{_datadir}/appdata
+
 Name:           vim-%{upstream_name}
 Version:        3.7.0
 Release:        5%{?dist}
@@ -10,10 +12,13 @@ Summary(fr):    Une extension de vim vérifiant la syntaxe pour les langages de 
 License:        WTFPL
 URL:            https://github.com/scrooloose/syntastic
 Source0:        https://github.com/scrooloose/syntastic/archive/%{version}.tar.gz
+Source1:        vim-syntastic.metainfo.xml
 
 BuildArch:      noarch
 Requires:       vim
 BuildRequires:  glibc-common
+# Needed for AppData check.
+BuildRequires:  libappstream-glib
 # Rename from 'syntastic'
 Provides:       %upstream_name = %version-%release
 Obsoletes:      %upstream_name < %version-%release
@@ -199,6 +204,15 @@ cp      -rp       syntax_checkers/                      %{buildroot}%{vimfiles}/
 # z80.vim            -> no 80_syntax_checker.pyt executable in repo
 # zpt.vim            -> no zptlint executable in repo
 
+# Install AppData.
+mkdir -p %{buildroot}%{appdata_dir}
+install -m 644 %{SOURCE1} %{buildroot}%{appdata_dir}
+
+
+%check
+# Check the AppData add-on to comply with guidelines.
+appstream-util validate-relax --nonet %{buildroot}/%{_datadir}/appdata/*.metainfo.xml
+
 
 %post
 umask 022
@@ -228,12 +242,16 @@ exit 0
 %{vimfiles}/autoload/syntastic/postprocess.vim
 %{vimfiles}/autoload/syntastic/preprocess.vim
 %{vimfiles}/autoload/syntastic//util.vim
+%{appdata_dir}/vim-syntastic.metainfo.xml
 
 
 %files_to_do
 
 
 %changelog
+* Fri Sep 16 2016 Vít Ondruch <vondruch@redhat.com> - 3.7.0-5
+- add AppData support
+
 * Fri Sep 16 2016 Pavel Raiskup <praiskup@redhat.com> - 3.7.0-5
 - rename to vim-syntastic
 
