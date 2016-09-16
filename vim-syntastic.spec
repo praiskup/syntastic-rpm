@@ -3,7 +3,7 @@
 
 Name:           vim-%{upstream_name}
 Version:        3.7.0
-Release:        4%{?dist}
+Release:        5%{?dist}
 Summary:        A vim plugins to check syntax for programming languages
 Summary(fr):    Une extension de vim vérifiant la syntaxe pour les langages de programmation
 
@@ -89,7 +89,7 @@ Permet de vérifier les fichiers sources écrit en %{-n*}.                      
 %add_subpackage -n objc gcc-objc
 %add_subpackage -n objcpp gcc-objc++
 %add_subpackage -n ocaml ocaml
-%add_subpackage -n perl perl syntastic-pod
+%add_subpackage -n perl perl %name-pod
 %add_subpackage -n php php
 %add_subpackage -n po gettext
 %add_subpackage -n pod perl
@@ -229,7 +229,7 @@ exit 0
 
 
 %changelog
-* Thu Sep 15 2016 Pavel Raiskup <praiskup@redhat.com> - 3.7.0-4
+* Fri Sep 16 2016 Pavel Raiskup <praiskup@redhat.com> - 3.7.0-5
 - rename to vim-syntastic
 
 * Wed Sep 14 2016 Pavel Raiskup <praiskup@redhat.com> - 3.7.0-3
