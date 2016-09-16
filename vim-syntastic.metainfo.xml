@@ -7,5 +7,5 @@
 <url type="homepage">https://github.com/scrooloose/syntastic</url>
 <metadata_license>CC0-1.0</metadata_license>
 <project_license>WTFPL</project_license>
-<updatecontact>praiskup@redhat.com</updatecontact>
+<updatecontact>vim-syntastic-owner@fedoraproject.org</updatecontact>
 </component>
