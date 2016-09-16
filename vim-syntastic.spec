@@ -14,6 +14,9 @@ Source0:        https://github.com/scrooloose/syntastic/archive/%{version}.tar.g
 BuildArch:      noarch
 Requires:       vim
 BuildRequires:  glibc-common
+# Rename from 'syntastic'
+Provides:       %upstream_name = %version-%release
+Obsoletes:      %upstream_name < %version-%release
 
 
 %description
@@ -38,6 +41,8 @@ Summary:        A syntax checker for %{-n*} programming language                
 Summary(fr):    Un vérificateur de syntaxe pour le langage de programmation %{-n*}  \
 Requires:       %{name} =  %{version}-%{release}                                    \
 Requires:       %*                                                                  \
+Provides:       %upstream_name-%{-n*} = %version-%release                           \
+Obsoletes:      %upstream_name-%{-n*} < %version-%release                           \
 %description %{-n*}                                                                 \
 Allows checking %{-n*} sources files.                                               \
 %description -l fr %{-n*}                                                           \
