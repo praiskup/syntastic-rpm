@@ -5,7 +5,7 @@
 
 Name:           vim-%{upstream_name}
 Version:        3.7.0
-Release:        5%{?dist}
+Release:        6%{?dist}
 Summary:        A vim plugins to check syntax for programming languages
 Summary(fr):    Une extension de vim vérifiant la syntaxe pour les langages de programmation
 
@@ -21,7 +21,7 @@ BuildRequires:  glibc-common
 BuildRequires:  libappstream-glib
 # Rename from 'syntastic'
 Provides:       %upstream_name = %version-%release
-Obsoletes:      %upstream_name < %version-%release
+Obsoletes:      %upstream_name < 3.7.0-6
 
 
 %description
@@ -47,7 +47,7 @@ Summary(fr):    Un vérificateur de syntaxe pour le langage de programmation %{-
 Requires:       %{name} =  %{version}-%{release}                                    \
 Requires:       %*                                                                  \
 Provides:       %upstream_name-%{-n*} = %version-%release                           \
-Obsoletes:      %upstream_name-%{-n*} < %version-%release                           \
+Obsoletes:      %upstream_name-%{-n*} < 3.7.0-6                                     \
 %description %{-n*}                                                                 \
 Allows checking %{-n*} sources files.                                               \
 %description -l fr %{-n*}                                                           \
@@ -249,6 +249,9 @@ exit 0
 
 
 %changelog
+* Sun Sep 18 2016 Pavel Raiskup <praiskup@redhat.com> - 3.7.0-6
+- don't use obsoletes < NVR
+
 * Fri Sep 16 2016 Vít Ondruch <vondruch@redhat.com> - 3.7.0-5
 - add AppData support
 
